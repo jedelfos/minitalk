@@ -1,6 +1,6 @@
 CC=gcc
 
-CFLAGS=-Wall -Wextra -Werror -I 
+CFLAGS=-Wall -Wextra -Werror
 
 NAME_C=client
 NAME_S=server
@@ -22,19 +22,22 @@ RM=rm -f
 %.c%.o:
 	gcc $(CFLAGS) -c $< -o $@
 
-all:		$(NAME)
+all:		$(NAME_C) $(NAME_S)
 
 $(OBJS):	$(INC)
 
 
-$(NAME): 	$(INC) $(OBJS)
-	gcc $(CFLAGS) $(MLX) $(LIBFT) $(PRINT) $(OBJS) -o $(NAME)
+$(NAME_C): 	$(INC_C) $(OBJS_C)
+	gcc $(CFLAGS) -I $(INC_C) $(OBJS_C) -o $(NAME_C)
+
+$(NAME_S): 	$(INC_S) $(OBJS_S)
+	gcc $(CFLAGS) -I $(INC_S) $(OBJS_S) -o $(NAME_S)
 
 clean:
 	$(RM) $(OBJS)
 
 fclean: 	clean
-	$(RM) $(NAME)
+	$(RM) $(NAME_S) $(NAME_C)
 
 re:		fclean all
 

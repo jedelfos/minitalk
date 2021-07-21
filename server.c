@@ -4,6 +4,42 @@
 #include <signal.h>
 #include <string.h>
 
+static char	*calcul_itoa(char *result, int i, int save)
+{
+	if (!(result = (char*)malloc(sizeof(char) * (i + 2))))
+		return (NULL);
+	result[i + 1] = '\0';
+	while (i >= 0)
+	{
+		result[i ] = (save % 10) + 48;
+		save = save / 10;
+		i--;
+	}
+	return (result);
+}
+
+char		*ft_itoa(int n)
+{
+	int		i;
+	int		save;
+	char	*result;
+
+	i = 0;
+	result = 0;
+	save = n;
+	while (n >= 10)
+	{
+		n = n / 10;
+		i++;
+	}
+	result = calcul_itoa(result, i, save);
+	write(1, result, i + 1);
+	write(1, "\n", 1);
+	free (result);
+	return (0);
+}
+
+
 int	retour(int sig)
 {
 	static int	multi = 262144;
@@ -23,7 +59,6 @@ int	retour(int sig)
 		kill(nb, SIGUSR1);
 		usleep(200);
 		kill(nb, SIGUSR2);
-		printf ("\nreset %i\n",nb);
 		multi = 262144;
 		nb = 0;
 		return (1);
@@ -43,7 +78,6 @@ static void	t_signal(int sig)
 		multi = -10;
 		if (retour(sig) == 1)
 		{
-			printf ("\n reset \n");
 			sig = 0;
 			multi = 256;
 			nb = 0;
@@ -82,7 +116,7 @@ static void	t_signal(int sig)
 
 int	main(int argc, char *argv[])
 {
-	printf("%i\n", getpid());
+	ft_itoa(getpid());
 	signal(30, t_signal);
 	signal(31, t_signal);
 	while (1)

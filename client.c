@@ -7,7 +7,6 @@ static void	t_signal(int sig)
 {
 	
 	static char	prec[5];
-	printf("test");
 	int i;
 
 	i = 0;
@@ -19,7 +18,7 @@ static void	t_signal(int sig)
 	prec[i] = sig;
 	if (prec[0] == 30 && prec[1] == 31 && prec[2] == 30 && prec[3] == 31)
 	{
-		printf("ok\n");
+		write(1,"la chaine de caractere a bien etait recu\n",41);
 		exit(0);
 	}
 }
@@ -47,6 +46,7 @@ int	ft_atoi(const char *str)
 
 int	erreur(int i)
 {
+	write(1,"erreur d envoi (PID incorecte)\n",32);
 	exit(0);
 }
 
@@ -135,7 +135,6 @@ int	envoi(int cha, int pid)
 
 int	main(int argv, char **argc)
 {
-				printf("\n%i\n", getpid());
 	int	pid;
 	int	i;
 	int	cha;
@@ -149,7 +148,6 @@ int	main(int argv, char **argc)
 	while (argc[2][i])
 	{
 		cha = argc[2][i];
-
 		cha = envoi_neg(cha, argc, pid);
 		envoi(cha, pid);
 		i++;
@@ -158,7 +156,7 @@ int	main(int argv, char **argc)
 	i = 0;
 	while (i++ < 5)
 		sleep(2);
-	printf("ko\n");
+		write(1,"l envoit a eu un probleme\n",27);
 	return (0);
 }
 

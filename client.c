@@ -1,16 +1,37 @@
 #include <stdio.h>
- #include <signal.h> 
+#include <signal.h> 
 #include <unistd.h>
 #include <stdlib.h>
 
-int			ft_atoi(const char *str)
+static void	t_signal(int sig)
 {
-	int result;
+	
+	static char	prec[5];
+
 	int i;
 
 	i = 0;
+	while(prec[i] != 0)
+	{
+		i++;
+	}
+
+	prec[i] = sig;
+	if (prec[0] == 30 && prec[1] == 31 && prec[2] == 30 && prec[3] == 31)
+	{
+		printf("ok\n");
+		exit(0);
+	}
+}
+
+int	ft_atoi(const char *str)
+{
+	int	result;
+	int	i;
+
+	i = 0;
 	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-			|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
+		|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
 	{
 		i++;
 	}
@@ -24,73 +45,115 @@ int			ft_atoi(const char *str)
 	return (result);
 }
 
-int erreur(int i)
+int	erreur(int i)
 {
 	exit(0);
 }
 
-int main(int argv, char **argc)
+int	launch_pid(int pid)
 {
-    int pid;
-	if (argv != 3)
-		erreur(1);
-    pid = ft_atoi(argc[1]);
+	int	nb;
+	int	multi;
 
-        printf("%s\n%i",argc[1], pid);
-
-
-
-
-	int i;
-	i = 0;
-	int nb;
-	int cha;
-	char test;
-	while (argc[2][i])
+	multi = 262144;
+	nb = getpid();
+	while (multi > 1)
 	{
-		cha = argc[2][i];
-		printf ("\n%i  ",cha);
-
-		if (cha < 0)
+		multi = multi / 2;
+		if (nb >= multi)
 		{
 			if (kill(pid, SIGUSR2) == -1)
-				erreur(2);		
-			printf ("1 -\n");
-			cha = cha * -1;
+				erreur(2);
+			nb = nb - multi;
 		}
 		else
 		{
 			if (kill(pid, SIGUSR1) == -1)
-				erreur(2);	
-			printf ("0 -\n");
+				erreur(2);
 		}
 		usleep(100);
-		test = cha;
-		nb = 128;
-		while (nb > 1)
+	}
+	return (0);
+}
+
+int	retour(int	pid)
+{
+	int	i;
+
+	i = 0;
+	while (i < 16)
+	{
+		if (kill(pid, SIGUSR1) == -1)
+			erreur(2);
+		i++;
+		usleep(100);
+	}
+	launch_pid(pid);
+	return (0);
+}
+
+int	envoi_neg(int cha, char **argc, int pid)
+{
+	if (cha < 0)
+	{
+		if (kill(pid, SIGUSR2) == -1)
+			erreur(2);
+		cha = cha * -1;
+	}
+	else
+	{
+		if (kill(pid, SIGUSR1) == -1)
+			erreur(2);
+	}
+	usleep(100);
+	return (cha);
+}
+
+int	envoi(int cha, int pid)
+{
+	int	nb;
+
+	nb = 128;
+	while (nb > 1)
+	{
+		nb = nb / 2;
+		if (cha >= nb)
 		{
-			nb = nb / 2;
-			printf ("%i  ",test);
-			if (test >= nb)
-			{
-				test = test - nb;
-				if (kill(pid, SIGUSR2) == -1)
-					erreur(2);
-
-				printf ("1\n");
-
-			}
-			else
-			{
-				if (kill(pid, SIGUSR1) == -1)
-					erreur(2);
-				printf ("0\n");
-			}
-			usleep(100);
-
+			cha = cha - nb;
+			if (kill(pid, SIGUSR2) == -1)
+				erreur(2);
 		}
+		else
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				erreur(2);
+		}
+		usleep(100);
+	}
+	return (0);
+}
+
+int	main(int argv, char **argc)
+{
+	int	pid;
+	int	i;
+	int	cha;
+
+	if (argv != 3)
+		erreur(1);
+	pid = ft_atoi(argc[1]);
+	i = 0;
+	while (argc[2][i])
+	{
+		cha = argc[2][i];
+				printf("%c", cha);
+
+		cha = envoi_neg(cha, argc, pid);
+		envoi(cha, pid);
 		i++;
 	}
-
-    return 0;
+	retour(pid);
+//	signal(30, t_signal);
+//	signal(31, t_signal);
+	return (0);
 }

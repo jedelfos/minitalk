@@ -5,16 +5,14 @@
 
 static void	t_signal(int sig)
 {
-	
-	static char	prec[5];
-	int i;
+	static char	prec [5];
+	int			i;
 
 	i = 0;
 	while(prec[i] != 0)
 	{
 		i++;
 	}
-
 	prec[i] = sig;
 	if (prec[0] == 30 && prec[1] == 31 && prec[2] == 30 && prec[3] == 31)
 	{

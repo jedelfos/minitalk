@@ -6,19 +6,20 @@
 
 static char	*calcul_itoa(char *result, int i, int save)
 {
-	if (!(result = (char*)malloc(sizeof(char) * (i + 2))))
+	result = (char *)malloc(sizeof(char) * (i + 2));
+	if (result == NULL)
 		return (NULL);
 	result[i + 1] = '\0';
 	while (i >= 0)
 	{
-		result[i ] = (save % 10) + 48;
+		result[i] = (save % 10) + 48;
 		save = save / 10;
 		i--;
 	}
 	return (result);
 }
 
-char		*ft_itoa(int n)
+int	ft_itoa(int n)
 {
 	int		i;
 	int		save;
@@ -33,12 +34,13 @@ char		*ft_itoa(int n)
 		i++;
 	}
 	result = calcul_itoa(result, i, save);
+	if (result == NULL)
+		return (1);
 	write(1, result, i + 1);
 	write(1, "\n", 1);
 	free (result);
 	return (0);
 }
-
 
 int	retour(int sig)
 {
@@ -48,7 +50,6 @@ int	retour(int sig)
 	multi = multi / 2;
 	if (sig == 31)
 		nb = nb + multi ;
-
 	if (multi == 1)
 	{
 		usleep(200);
@@ -61,6 +62,7 @@ int	retour(int sig)
 		kill(nb, SIGUSR2);
 		multi = 262144;
 		nb = 0;
+		write(1, "\n", 1);
 		return (1);
 	}
 	return (0);
@@ -87,9 +89,7 @@ static void	t_signal(int sig)
 	if (sig == 31 && multi == 128)
 		neg = -1;
 	else if (sig == 31)
-	{
-		nb = nb + multi ;
-	}
+		nb = nb + multi;
 	if (nb * neg == 0 && precedent[0] == 0 && multi == 1)
 		multi = -10;
 	if (multi == 1)
@@ -116,7 +116,8 @@ static void	t_signal(int sig)
 
 int	main(int argc, char *argv[])
 {
-	ft_itoa(getpid());
+	if (ft_itoa(getpid()) == 1)
+		return (0);
 	signal(30, t_signal);
 	signal(31, t_signal);
 	while (1)

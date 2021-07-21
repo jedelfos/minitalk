@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/21 16:53:50 by jedelfos          #+#    #+#             */
+/*   Updated: 2021/07/21 16:53:52 by jedelfos         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h> 
 #include <stdio.h>
 #include <unistd.h>
@@ -68,6 +80,32 @@ int	retour(int sig)
 	return (0);
 }
 
+int	signal_2(int *nb, int *neg, char *precedent, int *multi)
+{
+	if (nb[0] * neg[0] == 0 && precedent[0] == 0 && multi[0] == 1)
+		multi[0] = -10;
+	if (multi[0] == 1)
+	{
+		nb[0] = nb[0] * neg[0];
+		precedent[1] = nb[0];
+		if (precedent[0] < 0)
+		{
+			write(1, precedent, 2);
+			neg[0] = 10;
+			precedent [0] = 0;
+		}
+		else if (nb[0] >= 0)
+			write(1, &nb[0], 1);
+		multi[0] = 256;
+		if (neg[0] != 10)
+			precedent [0] = nb[0];
+		neg[0] = 1;
+		nb[0] = 0;
+	}
+	multi[0] = multi[0] / 2;
+	return (0);
+}
+
 static void	t_signal(int sig)
 {
 	static int	multi = 128;
@@ -90,27 +128,7 @@ static void	t_signal(int sig)
 		neg = -1;
 	else if (sig == 31)
 		nb = nb + multi;
-	if (nb * neg == 0 && precedent[0] == 0 && multi == 1)
-		multi = -10;
-	if (multi == 1)
-	{
-		nb = nb * neg;
-		precedent[1] = nb;
-		if (precedent[0] < 0)
-		{
-			write(1, precedent, 2);
-			neg = 10;
-			precedent [0] = 0;
-		}
-		else if (nb >= 0)
-			write(1, &nb, 1);
-		multi = 256;
-		if (neg != 10)
-			precedent [0] = nb;
-		neg = 1;
-		nb = 0;
-	}
-	multi = multi / 2;
+	signal_2(&nb, &neg, precedent, &multi);
 	return ;
 }
 

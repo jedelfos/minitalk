@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/21 16:53:43 by jedelfos          #+#    #+#             */
+/*   Updated: 2021/07/21 16:53:54 by jedelfos         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <signal.h> 
 #include <unistd.h>
@@ -9,14 +21,12 @@ static void	t_signal(int sig)
 	int			i;
 
 	i = 0;
-	while(prec[i] != 0)
-	{
+	while (prec[i] != 0)
 		i++;
-	}
 	prec[i] = sig;
 	if (prec[0] == 30 && prec[1] == 31 && prec[2] == 30 && prec[3] == 31)
 	{
-		write(1,"la chaine de caractere a bien etait recu\n",41);
+		write(1, "la chaine de caractere a bien etait recu\n", 41);
 		exit(0);
 	}
 }
@@ -44,7 +54,7 @@ int	ft_atoi(const char *str)
 
 int	erreur(int i)
 {
-	write(1,"erreur d envoi (PID incorecte)\n",32);
+	write(1, "erreur d envoi (PID incorecte)\n", 32);
 	exit(0);
 }
 
@@ -154,7 +164,6 @@ int	main(int argv, char **argc)
 	i = 0;
 	while (i++ < 5)
 		sleep(2);
-		write(1,"l envoit a eu un probleme\n",27);
+	write(1, "l envoit a eu un probleme\n", 27);
 	return (0);
 }
-

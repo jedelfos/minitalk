@@ -7,7 +7,7 @@ static void	t_signal(int sig)
 {
 	
 	static char	prec[5];
-
+	printf("test");
 	int i;
 
 	i = 0;
@@ -71,7 +71,7 @@ int	launch_pid(int pid)
 			if (kill(pid, SIGUSR1) == -1)
 				erreur(2);
 		}
-		usleep(500);
+		usleep(200);
 	}
 	return (0);
 }
@@ -86,7 +86,7 @@ int	retour(int	pid)
 		if (kill(pid, SIGUSR1) == -1)
 			erreur(2);
 		i++;
-		usleep(500);
+		usleep(200);
 	}
 	launch_pid(pid);
 	return (0);
@@ -105,7 +105,7 @@ int	envoi_neg(int cha, char **argc, int pid)
 		if (kill(pid, SIGUSR1) == -1)
 			erreur(2);
 	}
-	usleep(500);
+	usleep(200);
 	return (cha);
 }
 
@@ -128,17 +128,20 @@ int	envoi(int cha, int pid)
 			if (kill(pid, SIGUSR1) == -1)
 				erreur(2);
 		}
-		usleep(500);
+		usleep(200);
 	}
 	return (0);
 }
 
 int	main(int argv, char **argc)
 {
+				printf("\n%i\n", getpid());
 	int	pid;
 	int	i;
 	int	cha;
 
+	signal(30, t_signal);
+	signal(31, t_signal);
 	if (argv != 3)
 		erreur(1);
 	pid = ft_atoi(argc[1]);
@@ -146,15 +149,16 @@ int	main(int argv, char **argc)
 	while (argc[2][i])
 	{
 		cha = argc[2][i];
-				printf("%c", cha);
 
 		cha = envoi_neg(cha, argc, pid);
 		envoi(cha, pid);
 		i++;
 	}
 	retour(pid);
-//	signal(30, t_signal);
-//	signal(31, t_signal);
+	i = 0;
+	while (i++ < 5)
+		sleep(2);
+	printf("ko\n");
 	return (0);
 }
 

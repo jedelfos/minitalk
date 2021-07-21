@@ -11,24 +11,21 @@ int	retour(int sig)
 
 	multi = multi / 2;
 	if (sig == 31)
-	{
 		nb = nb + multi ;
-		printf ("evoi 1");
-	}
-	else
-		printf ("evoi 0");
+
 	if (multi == 1)
 	{
+		usleep(200);
+		kill(nb, SIGUSR1);
+		usleep(200);
+		kill(nb, SIGUSR2);
+		usleep(200);
+		kill(nb, SIGUSR1);
+		usleep(200);
+		kill(nb, SIGUSR2);
+		printf ("\nreset %i\n",nb);
 		multi = 262144;
 		nb = 0;
-//		kill(nb, SIGUSR1);
-//		usleep(100);
-//		kill(nb, SIGUSR2);
-//		usleep(100);
-//		kill(nb, SIGUSR1);
-//		usleep(100);
-//		kill(nb, SIGUSR2);
-//		printf ("\nreset \n");
 		return (1);
 	}
 	return (0);
@@ -36,10 +33,6 @@ int	retour(int sig)
 
 static void	t_signal(int sig)
 {
-if (sig == 31 )
-		printf("    1");
-	else
-		printf("    0");
 	static int	multi = 128;
 	static int	nb = 0;
 	static int	neg = 1;
@@ -50,20 +43,18 @@ if (sig == 31 )
 		multi = -10;
 		if (retour(sig) == 1)
 		{
-			printf ("\nreset \n");
+			printf ("\n reset \n");
 			sig = 0;
 			multi = 256;
 			nb = 0;
 			neg = 1;
 		}
 	}
-
 	if (sig == 31 && multi == 128)
 		neg = -1;
 	else if (sig == 31)
 	{
 		nb = nb + multi ;
-			printf("  *  %i \n", nb);
 	}
 	if (nb * neg == 0 && precedent[0] == 0 && multi == 1)
 		multi = -10;
@@ -79,8 +70,6 @@ if (sig == 31 )
 		}
 		else if (nb >= 0)
 			write(1, &nb, 1);
-		printf(" \n");
-
 		multi = 256;
 		if (neg != 10)
 			precedent [0] = nb;

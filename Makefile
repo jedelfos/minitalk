@@ -34,11 +34,11 @@ $(NAME_S): 	$(INC_S) $(OBJS_S)
 	gcc $(CFLAGS) -I $(INC_S) $(OBJS_S) -o $(NAME_S)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS_C) $(OBJS_S)
 
 fclean: 	clean
 	$(RM) $(NAME_S) $(NAME_C)
 
 re:		fclean all
 
-.PHONY: all bonus clean fclean re lib
+.PHONY: all bonus clean fclean re lib client server

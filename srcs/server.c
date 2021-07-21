@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 16:53:50 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/21 17:55:46 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/21 18:05:25 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	t_signal(int sig)
 	return ;
 }
 
-int	main()
+int	main(void)
 {
 	if (ft_itoa(getpid()) == 1)
 		return (0);

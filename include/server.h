@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 17:04:23 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/21 17:51:18 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/21 18:05:19 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 int	ft_itoa(int n);
 int	retour(int sig);
 int	signal_2(int *nb, int *neg, char *precedent, int *multi);
-int	main(int argc, char *argv[]);
+int	main(void);
 
 #endif

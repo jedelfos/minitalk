@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 17:04:18 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/21 17:51:20 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/21 18:05:17 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdlib.h>
 
 int	ft_atoi(const char *str);
-int	erreur();
+int	erreur(int i);
 int	launch_pid(int pid);
 int	retour(int	pid);
 int	envoi_neg(int cha, int pid);

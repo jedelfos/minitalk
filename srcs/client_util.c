@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 17:03:27 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/07/21 17:43:50 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/07/21 18:06:54 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ int	ft_atoi(const char *str)
 	return (result);
 }
 
-int	erreur()
+int	erreur(int i)
 {
-	write(1, "erreur d envoi (PID incorecte)\n", 32);
+	if (i == 2)
+		write(1, "erreur d envoi (PID incorecte)\n", 32);
+	else if (i == 1)
+		write(1, "erreur d envoi (parametre incorrecte\n", 38);
 	exit(0);
 }

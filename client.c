@@ -71,7 +71,7 @@ int	launch_pid(int pid)
 			if (kill(pid, SIGUSR1) == -1)
 				erreur(2);
 		}
-		usleep(100);
+		usleep(500);
 	}
 	return (0);
 }
@@ -86,7 +86,7 @@ int	retour(int	pid)
 		if (kill(pid, SIGUSR1) == -1)
 			erreur(2);
 		i++;
-		usleep(100);
+		usleep(500);
 	}
 	launch_pid(pid);
 	return (0);
@@ -105,7 +105,7 @@ int	envoi_neg(int cha, char **argc, int pid)
 		if (kill(pid, SIGUSR1) == -1)
 			erreur(2);
 	}
-	usleep(100);
+	usleep(500);
 	return (cha);
 }
 
@@ -128,7 +128,7 @@ int	envoi(int cha, int pid)
 			if (kill(pid, SIGUSR1) == -1)
 				erreur(2);
 		}
-		usleep(100);
+		usleep(500);
 	}
 	return (0);
 }
@@ -157,3 +157,4 @@ int	main(int argv, char **argc)
 //	signal(31, t_signal);
 	return (0);
 }
+

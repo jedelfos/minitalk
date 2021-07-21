@@ -21,14 +21,14 @@ int	retour(int sig)
 	{
 		multi = 262144;
 		nb = 0;
-		kill(nb, SIGUSR1);
-		usleep(100);
-		kill(nb, SIGUSR2);
-		usleep(100);
-		kill(nb, SIGUSR1);
-		usleep(100);
-		kill(nb, SIGUSR2);
-		printf ("\nreset \n");
+//		kill(nb, SIGUSR1);
+//		usleep(100);
+//		kill(nb, SIGUSR2);
+//		usleep(100);
+//		kill(nb, SIGUSR1);
+//		usleep(100);
+//		kill(nb, SIGUSR2);
+//		printf ("\nreset \n");
 		return (1);
 	}
 	return (0);

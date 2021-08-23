@@ -5,11 +5,9 @@ CFLAGS=-Wall -Wextra -Werror
 NAME_C=client
 NAME_S=server
 
-SRCS_C =	./srcs/client.c \
-			./srcs/client_util.c
+SRCS_C =	./srcs/client.c
 
-SRCS_S =	./srcs/server.c \
-			./srcs/server_util.c
+SRCS_S =	./srcs/server.c
 
 OBJS_C=$(SRCS_C:.c=.o)
 OBJS_S=$(SRCS_S:.c=.o)

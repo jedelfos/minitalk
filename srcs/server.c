@@ -6,7 +6,7 @@
 /*   By: jedelfos <jedelfos@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 16:53:50 by jedelfos          #+#    #+#             */
-/*   Updated: 2021/08/23 13:34:03 by jedelfos         ###   ########lyon.fr   */
+/*   Updated: 2021/08/23 14:09:28 by jedelfos         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,22 @@ int	ft_itoa(int n)
 
 static void	t_signal(int sig)
 {
-    static int i = 0;
-    static int c = 0;
+	static int i = 0;
+	static int c = 0;
 
-    if (sig == 31 || sig == 30)
-    {
-        if (sig == 30)
-           c = c | 1;
-        i ++;
-        if (i == 8)
-        {
+	if (sig == 31 || sig == 30)
+	{
+		if (sig == 30)
+		   c = c | 1;
+		i ++;
+		if (i == 8)
+		{
 			write(1, &c, 1);
-    	    i = 0;
-        	c = 0;
+			i = 0;
+			c = 0;
 		}
-        c = c << 1;
-    }
+		c = c << 1;
+	}
 }
 
 int	main(void)
@@ -76,7 +76,7 @@ int	main(void)
 		return (0);
 	signal(30, t_signal);
 	signal(31, t_signal);
-    t_signal(0);
+	t_signal(0);
 	while (1)
 		sleep(10);
 	return (0);

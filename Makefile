@@ -22,14 +22,14 @@ RM=rm -f
 
 all:		$(NAME_C) $(NAME_S)
 
-$(OBJS):	$(INC)
+$(OBJS_C):	$(INC_C)
+$(OBJS_S):	$(INC_S)
 
+$(NAME_C): $(OBJS_C) $(INC_S)
+	@gcc $(CFLAGS) -I $(INC_C) $(OBJS_C) -o $(NAME_C)
 
-$(NAME_C): 	$(INC_C) $(OBJS_C)
-	gcc $(CFLAGS) -I $(INC_C) $(OBJS_C) -o $(NAME_C)
-
-$(NAME_S): 	$(INC_S) $(OBJS_S)
-	gcc $(CFLAGS) -I $(INC_S) $(OBJS_S) -o $(NAME_S)
+$(NAME_S): $(OBJS_S) $(INC_S)
+	@gcc $(CFLAGS) -I $(INC_S) $(OBJS_S) -o $(NAME_S)
 
 clean:
 	$(RM) $(OBJS_C) $(OBJS_S)
